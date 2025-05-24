@@ -2,15 +2,6 @@ const apiUrl = '/api/posts.php';
 let posts = [];
 let currentCommentIndex = null;
 
-const escapeHtml = (str) =>
-  str.replace(/[&<>"']/g, (m) => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  }[m]));
-
 const renderBlogs = () => {
   const container = document.getElementById('blogList');
   container.innerHTML = '';
@@ -19,14 +10,14 @@ const renderBlogs = () => {
       <div class="blog-card">
         <div class="blog-header">
           <div class="blog-user">
-            <img src="${escapeHtml(post.profile)}" alt="${escapeHtml(post.name)}">
+            <img src="${post.profile}"" alt="${post.name}">
             <div>
               <div 
                 class="blog-name editable" 
                 contenteditable="${post.isEditing}" 
                 data-index="${index}" 
                 data-type="name"
-              >${escapeHtml(post.name)}</div>
+              >${post.name}</div>
             </div>
           </div>
           <button class="edit-btn" onclick="toggleEdit(${index})">
@@ -38,7 +29,7 @@ const renderBlogs = () => {
           contenteditable="${post.isEditing}" 
           data-index="${index}" 
           data-type="description"
-        >${escapeHtml(post.description)}</p>
+        >${post.description}</p>
         <div class="blog-actions">
           <button class="btn" onclick="likePost(${index})">Like (${post.likes})</button>
           <button class="btn comment" onclick="openCommentModal(${index})">Commentaire (${post.comments})</button>
@@ -149,7 +140,7 @@ const submitComment = () => {
 };
 
 const submitPost = () => {
-  const desc = escapeHtml(document.getElementById("newDescription").value.trim());
+  const desc = document.getElementById("newDescription").value.trim();
 
   if (!desc) {
     return alert("Tous les champs sont requis.");
